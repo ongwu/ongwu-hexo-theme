@@ -73,7 +73,11 @@ npm install
 
 ### 4. 应用Ongwu主题
 
-1. 将`ongwu`里面的文件直接解压到你的博客`根目录`下，例如`my-blog`下
+1. 下载`ongwu主题`直接复制到你的博客`根目录`下，例如`my-blog`下，执行如下命令（在windows环境下）
+```bash
+git clone https://github.com/ongwu/ongwu-hexo-theme.git
+xcopy .\ongwu-hexo-theme\. /E /I /H
+```
 2. （可选）修改根目录`_config.yml`文件，由于直接解压，_config.yml文件会覆盖，所以不需要额外修改
 
 ```yaml
