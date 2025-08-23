@@ -1,6 +1,12 @@
-# Ongwu主题 - Hexo博客主题
+## Ongwu主题 - 专为GitHub Pages + Hexo 架构打造的自适应主题
 
 一个简洁大气的Hexo博客主题，专注于技术分享、项目展示和教程分享。
+
+### 主题演示：https://ongwu.github.io
+
+### 主题截图：
+
+<img width="1905" height="1307" alt="ongwu" src="https://github.com/user-attachments/assets/24a2b834-934b-4770-b5d1-6bcf86f611fb" />
 
 ## ✨ 特性
 
