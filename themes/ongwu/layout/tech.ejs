@@ -1,0 +1,178 @@
+<!-- 页面标题设置 -->
+<% page.title = '技术深究' %>
+
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            技术深究
+        </h1>
+        <p class="page-description">深入探讨技术原理和实践经验</p>
+    </div>
+    
+    <div class="tech-grid" id="techGrid">
+        <% 
+        var techPosts = site.posts.filter(function(post) {
+            return post.categories && post.categories.some(function(cat) {
+                return cat.name === 'tech';
+            });
+        });
+        %>
+        
+        <% techPosts.each(function(post) { %>
+        <div class="tech-item" data-post="true">
+            <div class="tech-icon">
+                <% if (post.icon) { %>
+                    <img src="<%- post.icon %>" alt="<%- post.title %>">
+                <% } else { %>
+                    <div class="default-icon">🧩</div>
+                <% } %>
+            </div>
+            <div class="tech-content">
+                <h3 class="tech-title">
+                    <a href="<%- config.root %><%- post.path %>"><%- post.title %></a>
+                </h3>
+                <p class="tech-subtitle"><%- post.subtitle || post.description || post.excerpt %></p>
+                <div class="tech-meta">
+                    <span class="tech-date"><%- date(post.date, 'YYYY-MM-DD') %></span>
+                    <% if (post.tags && post.tags.length > 0) { %>
+                        <div class="tech-tags">
+                            <% 
+                            var tagCount = 0;
+                            post.tags.each(function(tag) {
+                                if (tagCount < 2) {
+                            %>
+                                <a href="<%- config.root %>tags/<%- tag.name %>/" class="tag"><%- tag.name %></a>
+                            <%
+                                    tagCount++;
+                                }
+                            });
+                            %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+    
+    <!-- 分页导航 -->
+    <div class="pagination-wrapper" id="techPagination" style="display: none;">
+        <div class="pagination" id="techPaginationNav">
+            <!-- 分页按钮将通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="pagination-info" id="techPaginationInfo">
+            <!-- 分页信息将通过JavaScript动态生成 -->
+        </div>
+    </div>
+</div>
+
+<script>
+// 技术深究页面分页功能
+(function() {
+    const postsPerPage = 21;
+    const grid = document.getElementById('techGrid');
+    const pagination = document.getElementById('techPagination');
+    const paginationNav = document.getElementById('techPaginationNav');
+    const paginationInfo = document.getElementById('techPaginationInfo');
+    
+    if (!grid) return;
+    
+    const posts = Array.from(grid.querySelectorAll('[data-post="true"]'));
+    const totalPosts = posts.length;
+    const totalPages = Math.ceil(totalPosts / postsPerPage);
+    
+    // 声明当前页变量（使用window对象使其全局可访问）
+    window.currentPage = 1;
+    
+    // 总是显示分页，即使只有一页
+    pagination.style.display = 'block';
+    
+    if (totalPages <= 1) {
+        // 如果只有一页，显示所有文章
+        posts.forEach(post => post.style.display = 'block');
+        paginationInfo.innerHTML = `共 ${totalPosts} 篇文章`;
+        // 即使只有一页，也生成分页导航（显示页码1）
+        generatePagination();
+        return;
+    }
+    
+    // 隐藏所有文章
+    posts.forEach(post => post.style.display = 'none');
+    
+    // 显示第一页
+    showPage(1);
+    
+    // 生成分页导航
+    generatePagination();
+    
+    function showPage(pageNum) {
+        const start = (pageNum - 1) * postsPerPage;
+        const end = start + postsPerPage;
+        
+        posts.forEach((post, index) => {
+            post.style.display = (index >= start && index < end) ? 'block' : 'none';
+        });
+        
+        updatePaginationInfo(pageNum);
+    }
+    
+    function generatePagination() {
+        let html = '';
+        
+        // 上一页按钮
+        if (window.currentPage === 1) {
+            html += '<button class="page-btn prev-page" disabled>';
+            html += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
+            html += '<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+            html += '</svg>上一页</button>';
+        } else {
+            html += '<button class="page-btn prev-page" onclick="changePage(window.currentPage - 1)">';
+            html += '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
+            html += '<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+            html += '</svg>上一页</button>';
+        }
+        
+        // 页码按钮
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === window.currentPage) {
+                html += '<span class="page-btn current-page">' + i + '</span>';
+            } else {
+                html += '<button class="page-btn" onclick="changePage(' + i + ')">' + i + '</button>';
+            }
+        }
+        
+        // 下一页按钮
+        if (window.currentPage === totalPages) {
+            html += '<button class="page-btn next-page" disabled>';
+            html += '下一页<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
+            html += '<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+            html += '</svg></button>';
+        } else {
+            html += '<button class="page-btn next-page" onclick="changePage(window.currentPage + 1)">';
+            html += '下一页<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">';
+            html += '<path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+            html += '</svg></button>';
+        }
+        
+        paginationNav.innerHTML = html;
+    }
+    
+    function updatePaginationInfo(pageNum) {
+        paginationInfo.innerHTML = `第 ${pageNum} 页，共 ${totalPages} 页，总计 ${totalPosts} 篇文章`;
+    }
+    
+    window.changePage = function(pageNum) {
+        if (pageNum < 1 || pageNum > totalPages) return;
+        
+        window.currentPage = pageNum;
+        showPage(pageNum);
+        
+        // 重新生成分页导航以更新按钮状态
+        generatePagination();
+        
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+})();
+</script>

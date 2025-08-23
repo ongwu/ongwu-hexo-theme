@@ -1,0 +1,59 @@
+<article class="post">
+    <div class="container">
+        <header class="post-header">
+            <h1 class="post-title"><%- page.title %></h1>
+            <div class="post-meta">
+                <span class="post-date">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#666"/>
+                    </svg>
+                    <%- date(page.date, 'YYYY年MM月DD日') %>
+                </span>
+                <% if (page.categories && page.categories.length && page.categories[0]) { %>
+                <span class="post-category">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" fill="#666"/>
+                    </svg>
+                    <%- page.categories[0].name %>
+                </span>
+                <% } %>
+                <% if (page.tags && page.tags.length) { %>
+                <span class="post-tags">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" fill="#666"/>
+                    </svg>
+                    <% page.tags.forEach(function(tag, index) { %>
+                        <a href="<%- config.root %>tags/<%- tag.name %>/" class="tag-link"><%- tag.name %></a>
+                        <% if (index < page.tags.length - 1) { %>, <% } %>
+                    <% }); %>
+                </span>
+                <% } %>
+            </div>
+        </header>
+        
+        <div class="post-content">
+            <%- page.content %>
+        </div>
+        
+        <footer class="post-footer">
+            <div class="post-navigation">
+                <% if (page.prev) { %>
+                <a href="<%- config.root %><%- page.prev.path %>" class="prev-post">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="#666"/>
+                    </svg>
+                    <%- page.prev.title %>
+                </a>
+                <% } %>
+                <% if (page.next) { %>
+                <a href="<%- config.root %><%- page.next.path %>" class="next-post">
+                    <%- page.next.title %>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#666"/>
+                    </svg>
+                </a>
+                <% } %>
+            </div>
+        </footer>
+    </div>
+</article>
