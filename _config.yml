@@ -125,7 +125,8 @@ search:
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repo: 个人令牌信息填写
-  branch: main
+
+#deploy:
+#  type: git
+#  repo: 个人令牌信息填写
+#  branch: main
