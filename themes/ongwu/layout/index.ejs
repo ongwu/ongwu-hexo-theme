@@ -1,0 +1,172 @@
+<!-- 首页标题设置 -->
+<% page.title = '首页' %>
+
+<!-- 项目作品部分 -->
+<section class="section projects-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="title-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2>项目作品</h2>
+            </div>
+            <a href="<%- config.root %>projects/" class="more-link">更多</a>
+        </div>
+        
+        <div class="projects-grid">
+            <% 
+            var projectPosts = site.posts.filter(function(post) {
+                return post.categories && post.categories.some(function(cat) {
+                    return cat.name === 'projects';
+                });
+            }).limit(config.index.projects_count || 4);
+            %>
+            <% projectPosts.each(function(post) { %>
+            <div class="project-card">
+                <div class="project-preview">
+                    <% if (post.thumbnail) { %>
+                        <img src="<%- post.thumbnail %>" alt="<%- post.title %>" class="project-image">
+                    <% } else { %>
+                        <div class="project-placeholder">
+                            <div class="device-mockup">
+                                <div class="desktop"></div>
+                                <div class="tablet"></div>
+                                <div class="mobile"></div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="project-info">
+                    <h3 class="project-title">
+                        <a href="<%- config.root %><%- post.path %>"><%- post.title %></a>
+                    </h3>
+                    <p class="project-description"><%- post.description || post.excerpt %></p>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<!-- 技术深究部分 -->
+<section class="section tech-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="title-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h2>技术深究</h2>
+            </div>
+            <a href="<%- config.root %>tech/" class="more-link">更多</a>
+        </div>
+        
+        <div class="tech-grid">
+            <% 
+            var techPosts = site.posts.filter(function(post) {
+                return post.categories && post.categories.some(function(cat) {
+                    return cat.name === 'tech';
+                });
+            }).limit(config.index.tech_count || 6);
+            %>
+            <% techPosts.each(function(post) { %>
+            <div class="tech-item">
+                <div class="tech-icon">
+                    <% if (post.icon) { %>
+                        <img src="<%- post.icon %>" alt="<%- post.title %>">
+                    <% } else { %>
+                        <div class="default-icon">📄</div>
+                    <% } %>
+                </div>
+                <div class="tech-content">
+                    <h3 class="tech-title">
+                        <a href="<%- config.root %><%- post.path %>"><%- post.title %></a>
+                    </h3>
+                    <p class="tech-subtitle"><%- post.subtitle || post.description || post.excerpt %></p>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<!-- 教程分享部分 -->
+<section class="section tutorial-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">
+                <div class="title-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 19.5C4 18.1193 5.11929 17 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6.5 2H20V22H6.5C5.11929 22 4 20.8807 4 19.5V2.5C4 1.11929 5.11929 0 6.5 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 7H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 11H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2>教程分享</h2>
+            </div>
+            <a href="<%- config.root %>tutorial/" class="more-link">更多</a>
+        </div>
+        
+        <div class="tutorial-grid">
+            <% 
+            var tutorialPosts = site.posts.filter(function(post) {
+                return post.categories && post.categories.some(function(cat) {
+                    return cat.name === 'tutorial';
+                });
+            }).limit(config.index.tutorial_count || 12);
+            %>
+            <% tutorialPosts.each(function(post) { %>
+            <div class="tutorial-item">
+                <div class="tutorial-icon">
+                    <% if (post.icon) { %>
+                        <img src="<%- post.icon %>" alt="<%- post.title %>">
+                    <% } else { %>
+                        <div class="default-icon">📚</div>
+                    <% } %>
+                </div>
+                <div class="tutorial-content">
+                    <h3 class="tech-title">
+                        <a href="<%- config.root %><%- post.path %>"><%- post.title %></a>
+                    </h3>
+                    <p class="tech-subtitle"><%- post.subtitle || post.description || post.excerpt %></p>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<!-- 友情链接部分 -->
+<section class="section links-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-title">
+                <h2>友情链接</h2>
+            </div>
+            <div class="links-grid">
+                <a href="https://hexo.io" class="link-item" target="_blank" rel="noopener">
+                    <span>Hexo</span>
+                </a>
+                <a href="https://github.com" class="link-item" target="_blank" rel="noopener">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://nodejs.org" class="link-item" target="_blank" rel="noopener">
+                    <span>Node.js</span>
+                </a>
+                <a href="https://ongwu.cn" class="link-item" target="_blank" rel="noopener">
+                    <span>Ongwu</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
