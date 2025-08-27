@@ -12,8 +12,8 @@
 ### 一键安装脚本windows版：windows一键安装脚本.bat
 
 ### 主题截图：
+<img width="1905" height="1739" alt="ongwu github io_" src="https://github.com/user-attachments/assets/11c76cee-0eb0-4bdc-b4df-8d08c7d60fed" />
 
-<img width="1905" height="1307" alt="ongwu" src="https://github.com/user-attachments/assets/24a2b834-934b-4770-b5d1-6bcf86f611fb" />
 
 ## ✨ 特性
 
